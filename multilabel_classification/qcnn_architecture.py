@@ -1,8 +1,7 @@
 import pennylane as qml
-from digits import X_train
-import numpy as np
 import matplotlib.pyplot as plt
 from jax import numpy as jnp
+from plot_results import Plot_architecture
 
 
 class QCNNArchitecture:
@@ -107,32 +106,6 @@ class QCNNArchitecture:
         # QPooling_2
         self.QPoolFilter_1(params[18:21], wires_to_measure=self.wires[1], wires_to_apply=self.wires[3])
         qml.ArbitraryUnitary(params[21:36], wires=[self.wires[3], self.wires[5]])
-
-
-q_bits = list(range(6))
-dev = qml.device("default.qubit", wires=range(len(q_bits)))
-
-
-def Plot_architecture() -> qml.draw_mpl:
-    """
-    Plot the architecture.
-    :return: qml.draw_mpl.
-    """
-    @qml.qnode(dev, interface="jax")
-    def qnn_circuit(x: jnp.array, w: jnp.array) -> list:
-        """
-        QNN architecture which call the qnode and simulates the circuit.
-        :param x: (jnp.array) input data;
-        :param w: (jnp.array) weights;
-        :return: (list) probabilities of each measured classes.
-        """
-        circuit = QCNNArchitecture(device=dev, wires=q_bits)
-        qml.AmplitudeEmbedding(features=x, wires=range(len(q_bits)), normalize=True, pad_with=0.)
-        circuit.QCNN(w)
-        probs = qml.probs(wires=[3, 5])
-        return probs
-    weights = np.random.rand(37)
-    return qml.draw_mpl(qnode=qnn_circuit)(X_train, weights)
 
 
 if __name__ == "__main__":
