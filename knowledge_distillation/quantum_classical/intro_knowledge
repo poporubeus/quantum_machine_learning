@@ -1,0 +1,1 @@
+Knowledge distillation project: trasferring knowledge from a large Torch model to a lighter Pennylane quantum model.
