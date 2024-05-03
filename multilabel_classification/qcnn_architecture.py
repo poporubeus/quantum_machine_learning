@@ -1,7 +1,6 @@
 import pennylane as qml
 import matplotlib.pyplot as plt
 from jax import numpy as jnp
-from plot_results import Plot_architecture
 
 
 class QCNNArchitecture:
@@ -107,8 +106,4 @@ class QCNNArchitecture:
         self.QPoolFilter_1(params[18:21], wires_to_measure=self.wires[1], wires_to_apply=self.wires[3])
         qml.ArbitraryUnitary(params[21:36], wires=[self.wires[3], self.wires[5]])
 
-
-if __name__ == "__main__":
-    Plot_architecture()
-    plt.show()
 

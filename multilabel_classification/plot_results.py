@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from jax import numpy as jnp
-from train import train_acc, train_cost, val_acc, val_cost, test_estimation
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from digits import y_test, X_train
 from qcnn_architecture import QCNNArchitecture
@@ -9,7 +8,7 @@ import pennylane as qml
 import numpy as np
 
 
-def Plot_results() -> plt.figure():
+def Plot_results(train_cost: list, val_cost: list, train_acc: list, val_acc: list) -> plt.figure():
     """
     Plot training and validating results after each epoch.
     :return: plt.figure()
@@ -29,7 +28,7 @@ def Plot_results() -> plt.figure():
     return fig
 
 
-def PLot_Confusion_Matrix() -> ConfusionMatrixDisplay:
+def PLot_Confusion_Matrix(test_estimation: list) -> ConfusionMatrixDisplay:
     """
     Creates confusion matrix and displays it.
     :return: (ConfusionMatrixDisplay) displayed confusion matrix.
@@ -59,4 +58,3 @@ def Plot_architecture() -> qml.draw_mpl:
         return probs
     weights = np.random.rand(37)
     return qml.draw_mpl(qnode=qnn_circuit)(X_train, weights)
-

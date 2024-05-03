@@ -1,9 +1,9 @@
 from config import *
 from sklearn.utils import gen_batches
-import matplotlib.pyplot as plt
 from digits import X_train, y_train, X_test, y_test, X_val, y_val
-from plot_results import PLot_Confusion_Matrix, Plot_results
 from utils import *
+from plot_results import Plot_results, PLot_Confusion_Matrix
+import matplotlib.pyplot as plt
 
 
 def training(seed: int, model: callable, selected_shape: int, n_epochs: int, batch_size: int) -> list:
@@ -64,6 +64,6 @@ if "__main__" == __name__:
                                         optimal_params=optimal_params,
                                         quantum_model=quantum_model)
     print("Test acc. teacher model:", test_acc)
-    Plot_results()
-    PLot_Confusion_Matrix()
+    Plot_results(train_cost, val_cost, train_acc, val_acc)
+    PLot_Confusion_Matrix(test_estimation)
     plt.show()
