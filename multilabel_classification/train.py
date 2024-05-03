@@ -1,55 +1,27 @@
-import pennylane as qml
-import jax
-from jax import numpy as jnp
+from config import *
 from sklearn.utils import gen_batches
 import matplotlib.pyplot as plt
-import optax
-from sklearn.metrics import accuracy_score
 from digits import X_train, y_train, X_test, y_test, X_val, y_val
-from qcnn_architecture import QCNNArchitecture
+from plot_results import PLot_Confusion_Matrix, Plot_results
+from utils import *
 
 
-lr = 0.001
-seed = 2222
-wires = list(range(6))
-dev = qml.device("default.qubit", wires=6)
+def training(seed: int, model: callable, selected_shape: int, n_epochs: int, batch_size: int) -> list:
+    """
+    Functions which trains the QCNN model on digits dataset with parameters chosen by the user.
+    :param seed: (int) Seed for reproducibility;
+    :param model: (callable) The QCNN model to train;
+    :param selected_shape: (int) Number of parameters to pass within the model;
+    :param n_epochs: (int) Number of epochs to train the model with;
+    :param batch_size: (int) Batch size.
+    :return: (list) List of values:
+    - train_cost_epochs (list) List of training cost values;
+    - train_acc_epochs (list) List of training accuracy values;
+    - val_cost_epochs (list) List of validation cost values;
+    - val_acc_epochs (list) List of validation accuracy values;
+    - optimal_params (list) List of optimal parameters for the QCNN assumed to be the last ones.
+    """
 
-
-@qml.qnode(device=dev, interface="jax")
-def qcnn(data, params):
-    circuit = QCNNArchitecture(device=dev, wires=wires)
-    qml.AmplitudeEmbedding(features=data, wires=range(len(wires)), normalize=True, pad_with=0.)
-    circuit.QCNN(params)
-    probs = qml.probs(wires=[3, 5])
-    return probs
-
-
-def optax_bce(x,y,theta, quantum_model):
-    labels = jnp.array(y)
-    pred = jnp.array(quantum_model(x, theta))
-    one_hot = jax.nn.one_hot(labels, pred.shape[1])
-    loss = jnp.mean(optax.softmax_cross_entropy(logits=pred, labels=one_hot))
-    return loss
-
-
-def optimizer_update(opt_state, params, x, y, quantum_model):
-    optimizer = optax.adam(learning_rate=lr)
-    loss_value, grads = jax.value_and_grad(lambda theta: optax_bce(x, y, theta,quantum_model))(params)
-    updates, opt_state = optimizer.update(grads, opt_state)
-    params = optax.apply_updates(params, updates)
-    return params, opt_state, loss_value
-
-
-def accuracy(X, y, params, quantum_model):
-    labels = jnp.array(y)
-    pred = jnp.array(quantum_model(X, params))
-    accuracy = jnp.sum(jnp.argmax(jnp.array(pred), axis=1) == labels)
-    return accuracy/len(labels)
-
-
-def training(seed, model, selected_shape):
-    n_epochs = 150
-    batch_size = 32
     key = jax.random.PRNGKey(seed)
     initial_params = jax.random.normal(key, shape=(selected_shape,))
     key = jax.random.split(key)[0]
@@ -72,7 +44,6 @@ def training(seed, model, selected_shape):
         val_acc = accuracy(X_val, y_val, params, model)
         train_cost_epochs.append(cost)
         val_cost_epochs.append(val_cost)
-        # Accuracy during training and validation
         train_acc_epochs.append(train_acc)
         val_acc_epochs.append(val_acc)
         print(f"Epoch: {epoch}, ---Train loss: ", cost, "---Train acc: ", train_acc,
@@ -81,36 +52,18 @@ def training(seed, model, selected_shape):
     return [train_cost_epochs, train_acc_epochs, val_cost_epochs, val_acc_epochs, optimal_params]
 
 
-def TestAcc(X, y, optimal_params, quantum_model):
-    labels = jnp.array(y)
-    predictions = quantum_model(X, optimal_params)
-    estimation = jnp.argmax(predictions, axis=1)
-    return accuracy_score(y_true=labels, y_pred=estimation)
-
-
-def SelectModel(circuit_function: callable) -> jax.jit:
-    qnn_teacher = jax.vmap(circuit_function,
-                           (0, None))  # use vmap to apply quantum_nn function to a vector, it's typical in JAX.
-    quantum_model = jax.jit(qnn_teacher)
-    return quantum_model
-
-
-quantum_model = SelectModel(qcnn)
-train_cost, train_acc, val_cost, val_acc, optimal_params = training(seed=seed, model=quantum_model, selected_shape=60)
-
-
-fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(12,4.5))
-axs[0].plot(train_cost, label="Train cost teacher", color='royalblue')
-axs[0].plot(val_cost, label="Validation cost teacher", color='tab:blue')
-axs[1].plot(train_acc, label='Train accuracy teacher', color='orangered')
-axs[1].plot(val_acc, label='Validation accuracy teacher', color='orange')
-axs[0].set_xlabel("Epoch")
-axs[1].set_xlabel("Epoch")
-axs[0].set_xticks(jnp.arange(0, 160, 10))
-axs[1].set_xticks(jnp.arange(0, 160, 10))
-axs[0].legend()
-axs[1].legend()
-plt.show()
-
-
-print("Test acc. teacher model:", TestAcc(X_test, y_test, optimal_params=optimal_params, quantum_model=quantum_model))
+if "__main__" == __name__:
+    quantum_model = SelectModel(qcnn)
+    train_cost, train_acc, val_cost, val_acc, optimal_params = training(seed=seed,
+                                                                        model=quantum_model,
+                                                                        selected_shape=params_size,
+                                                                        n_epochs=n_epochs,
+                                                                        batch_size=batch_size)
+    test_estimation, test_acc = TestAcc(X=X_test,
+                                        y=y_test,
+                                        optimal_params=optimal_params,
+                                        quantum_model=quantum_model)
+    print("Test acc. teacher model:", test_acc)
+    Plot_results()
+    PLot_Confusion_Matrix()
+    plt.show()
