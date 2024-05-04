@@ -9,6 +9,12 @@ from config import dev, wires, lr
 
 @qml.qnode(device=dev, interface="jax")
 def qcnn(data: jnp.array, params: jnp.array) -> qml.probs:
+    """
+    It computes the QCNN architecture and returns probabilities of detecting a class of images.
+    :param data: (jnp.array) The input data to encode;
+    :param params: (jnp.array) The weights within the layers;
+    :return: probs: (list) The probabilities of detecting a class.
+    """
     circuit = QCNNArchitecture(device=dev, wires=wires)
     qml.AmplitudeEmbedding(features=data, wires=range(len(wires)), normalize=True, pad_with=0.)
     circuit.QCNN(params)
@@ -17,6 +23,12 @@ def qcnn(data: jnp.array, params: jnp.array) -> qml.probs:
 
 
 def SelectModel(circuit_function: callable) -> jax.jit:
+    """
+    Select the model to use in the experiment. Note that any model is allowed to be used
+    within this experiment, but it needs to have the same parameters as the circuit function.
+    :param circuit_function: (callable) The function which generates the circuit.
+    :return: quantum_model (jax.jit) The quantum circuit mapped and executed.
+    """
     qnn_teacher = jax.vmap(
         circuit_function,
         (0, None)
@@ -26,6 +38,17 @@ def SelectModel(circuit_function: callable) -> jax.jit:
 
 
 def optax_bce(x: jnp.array, y: jnp.array, theta: jnp.array, quantum_model: callable) -> jnp.ndarray:
+    """
+    Computes the cross-entropy loss between the x inputs predicted by the model and
+    the actual labels belonging to the dataset. The cross-entropy is implemented
+    by using an optax built-in function, which applies a softmax on the data predicted.
+    :param x: (jnp.array) The input data;
+    :param y: (jnp.array) The actual labels of the input data;
+    :param theta: (jnp.array) The parameters of the model;
+    :param quantum_model: (callable) The function which generates the quantum circuit.
+    :return: loss (jnp.array) The cross-entropy loss mean between the x inputs predicted by the
+    model and/or the actual labels belonging to the dataset
+    """
     labels = jnp.array(y)
     pred = jnp.array(quantum_model(x, theta))
     one_hot = jax.nn.one_hot(labels, pred.shape[1])
@@ -34,21 +57,51 @@ def optax_bce(x: jnp.array, y: jnp.array, theta: jnp.array, quantum_model: calla
 
 
 def optimizer_update(opt_state: optax, params: jnp.array, x: jnp.array, y: jnp.array, quantum_model: callable) -> tuple:
+    """
+    Updates the optimizer and calculates the gradient of the loss w.r.t. the parameters.
+    :param opt_state: (optax) The optimizer state;
+    :param params: (jnp.array) The parameters of the model;
+    :param x: (jnp.array) The input data;
+    :param y: (jnp.array) The actual labels of the input data;
+    :param quantum_model: (callable) The function which generates the quantum circuit.
+    :return: (tuple):
+    - params (jnp.array) The updated parameters;
+    - opt_state (optax) The optimizer state;
+    - loss (jnp.array) The cross-entropy loss mean values.
+    """
     optimizer = optax.adam(learning_rate=lr)
-    loss_value, grads = jax.value_and_grad(lambda theta: optax_bce(x, y, theta,quantum_model))(params)
+    loss_value, grads = jax.value_and_grad(lambda theta: optax_bce(x, y, theta, quantum_model))(params)
     updates, opt_state = optimizer.update(grads, opt_state)
     params = optax.apply_updates(params, updates)
     return params, opt_state, loss_value
 
 
 def accuracy(X: jnp.array, y: jnp.array, params: jnp.array, quantum_model: callable) -> jnp.ndarray:
+    """
+    Computes the accuracy of the model after each epoch.
+    :param X: (jnp.array) The input data;
+    :param y: (jnp.array) The actual labels of the input data;
+    :param params: (jnp.array) The parameters of the model;
+    :param quantum_model: (callable) The function which generates the quantum circuit.
+    :return: mean_acc: (jnp.array) The mean accuracy.
+    """
     labels = jnp.array(y)
     pred = jnp.array(quantum_model(X, params))
     accuracy = jnp.sum(jnp.argmax(jnp.array(pred), axis=1) == labels)
-    return accuracy/len(labels)
+    mean_acc = accuracy/len(labels)
+    return mean_acc
 
 
 def TestAcc(X: jnp.array, y: jnp.array, optimal_params: jnp.array, quantum_model: callable) -> tuple:
+    """
+    It computes the accuracy on the test set. It could be used also for training and validating
+    sets.
+    :param X: (jnp.array) The test dataset;
+    :param y: (jnp.array) The test labels;
+    :param optimal_params: (jnp.array) The optimal parameters of the QCNN;
+    :param quantum_model: (callable) The quantum function of the circuit.
+    :return:
+    """
     labels = jnp.array(y)
     predictions = quantum_model(X, optimal_params)
     estimation = jnp.argmax(predictions, axis=1)
