@@ -100,9 +100,12 @@ def TestAcc(X: jnp.array, y: jnp.array, optimal_params: jnp.array, quantum_model
     :param y: (jnp.array) The test labels;
     :param optimal_params: (jnp.array) The optimal parameters of the QCNN;
     :param quantum_model: (callable) The quantum function of the circuit.
-    :return:
+    :return: (tuple):
+    - estimation (jnp.array) The estimated labels;
+    - score (float) The score after training.
     """
     labels = jnp.array(y)
     predictions = quantum_model(X, optimal_params)
     estimation = jnp.argmax(predictions, axis=1)
-    return estimation, accuracy_score(y_true=labels, y_pred=estimation)
+    score = accuracy_score(y_true=labels, y_pred=estimation)
+    return estimation, score
