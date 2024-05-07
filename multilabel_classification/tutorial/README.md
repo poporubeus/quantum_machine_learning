@@ -92,12 +92,12 @@ QCNN model <b />
 <b />
 Loss and accuracy plots
 <p align="center">
-  <img src="images/results_loss_acc.png" width="450" title="Metrics">
+  <img src="images/results_loss_acc.png" width="650" title="Metrics">
 </p>
 <b />
 Confusion matrix on test set
 <p align="center">
-  <img src="images/conf_matrix.png" width="450" title="Confusion matrix">
+  <img src="images/conf_matrix_test.png" width="550" title="Confusion matrix">
 </p>
 
 
