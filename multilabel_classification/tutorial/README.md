@@ -12,7 +12,7 @@ multilabel classification and stop of being constrained by binary classification
 __Goal:__ Train a fully quantum convolutional neural network to classify four classes of images using train and validation sets.<br />
 The idea behind the project, is also the realize a multilabel classification problem, by measuring two distinct qubits,<br />
 and to exploit JAX's speed in vectorizing the training.
-<ciao >
+
 
 __Installing libraries:__<br/>
 `!pip install numpy==1.23.5`<br/>
@@ -37,37 +37,42 @@ __Project's structure:__ <br/>
 │           └── digits.py<br/>
 
 
+
 __How to run:__
 After setting the device with `dev = qml.device("default.qubit, wires=6)` that is found inside __config.py__ file, <b />
 create the qnode by passing features and trainable weights inside the corresponding circuits <b />
-```@qml.qnode(device=dev, interface="jax") <b />
-def qcnn(data: jnp.array, params: jnp.array) -> qml.probs:<b />
-    """<b />
-    It computes the QCNN architecture and returns probabilities of detecting a class of images.<b />
-    :param data: (jnp.array) The input data to encode;<b />
-    :param params: (jnp.array) The weights within the layers;<b />
-    :return: probs: (list) The probabilities of detecting a class.<b />
-    """<b />
-    circuit = QCNNArchitecture(device=dev, wires=wires)<b />
-    qml.AmplitudeEmbedding(features=data, wires=range(len(wires)), normalize=True, pad_with=0.)<b />
-    circuit.QCNN(params)<b />
-    probs = qml.probs(wires=[3, 5])<b />
-    return probs```<b />
-  and call the function **training** iniside __train.py__ file by providing: <b />
-  seed; <b />
-  model (callable); <b />
-  selected_shape (int); <b />
-  n_epochs (int); <b />
-  batch_size (int);<b />
-  X_train;<b />
-  y_train;<b />
-  X_val;<b />
-  y_val <b />
-  like this way <b />
-  `loss_train, acc_train, loss_val, acc_val, last_params, opt_params = ( <b/>
-    training(seed=seed, model=q_model, selected_shape=params_size, n_epochs=n_epochs,<b/>
-         batch_size=batch_size, X_train=X_train, y_train=y_train,<b/>
-         X_val=X_val, y_val=y_val)<b/>
-)<b/>`
+```
+    @qml.qnode(device=dev, interface="jax")
+    def qcnn(data: jnp.array, params: jnp.array) -> qml.probs:
+        """
+        It computes the QCNN architecture and returns probabilities of detecting a class of images.
+        :param data: (jnp.array) The input data to encode;
+        :param params: (jnp.array) The weights within the layers;
+        :return: probs: (list) The probabilities of detecting a class.
+        """
+        circuit = QCNNArchitecture(device=dev, wires=wires)
+        qml.AmplitudeEmbedding(features=data, wires=range(len(wires)), normalize=True, pad_with=0.)
+        circuit.QCNN(params)
+        probs = qml.probs(wires=[3, 5])
+        return probs
+```
+and call the function **training** iniside __train.py__ file by providing: <b />
+seed; <b />
+model (callable); <b />
+selected_shape (int); <b />
+n_epochs (int); <b />
+batch_size (int);<b />
+X_train;<b />
+y_train;<b />
+X_val;<b />
+y_val <b />
+like this way <b />
+```
+    loss_train, acc_train, loss_val, acc_val, last_params, opt_params = (
+    training(seed=seed, model=q_model, selected_shape=params_size, n_epochs=n_epochs,
+         batch_size=batch_size, X_train=X_train, y_train=y_train,
+         X_val=X_val, y_val=y_val)
+)
+```
 
 
