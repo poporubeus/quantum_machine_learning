@@ -85,19 +85,20 @@ first 5 epochs <b />
 ```
 <b />
 QCNN model <b />
+how the architecture looks like. 
 <p align="center">
   <img src="images/qcnn_model_plot.png" width="950" title="QCNN">
 </p>
 <b />
-Loss and accuracy plots
+Loss and accuracy plots <b />
 <p align="center">
   <img src="images/results_loss_acc.png" width="650" title="Metrics">
 </p>
 <b />
 Confusion matrix on test set
+<b />
 <p align="left">
   <img src="images/conf_matrix_test.png" width="300" title="Confusion matrix">
-</p>
 <p align="right">
   <img src="images/conf_matrix_test_2.png" width="300" title="Confusion matrix 2">
 </p>
