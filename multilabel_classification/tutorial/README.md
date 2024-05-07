@@ -87,8 +87,16 @@ first 5 epochs <b />
 <b />
 QCNN model <b />
 <p align="center">
-  <img src="images/qcnn_model_plot.png" width="650" title="QCNN">
+  <img src="images/qcnn_model_plot.png" width="950" title="QCNN">
 </p>
+<b />
+Loss and accuracy plots
+<p align="center">
+  <img src="images/qcnn_model_plot.png" width="950" title="QCNN">
+</p>
+<b />
+
+
 
 
 
