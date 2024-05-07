@@ -75,4 +75,20 @@ like this way <b />
 )
 ```
 
+__Results:__ <b />
+first 5 epochs <b />
+```python
+    Epoch: 1, ---Train loss:  1.3823189 ---Train acc:  0.28611112 | ---Val loss:  1.3806758 ---Val acc:  0.30555555
+    Epoch: 2, ---Train loss:  1.3629571 ---Train acc:  0.42222223 | ---Val loss:  1.3691199 ---Val acc:  0.4201389
+    Epoch: 3, ---Train loss:  1.3458041 ---Train acc:  0.5222222 | ---Val loss:  1.3540121 ---Val acc:  0.5208333
+    Epoch: 4, ---Train loss:  1.3285551 ---Train acc:  0.62777776 | ---Val loss:  1.3412706 ---Val acc:  0.6006944
+    Epoch: 5, ---Train loss:  1.314161 ---Train acc:  0.6166667 | ---Val loss:  1.3290185 ---Val acc:  0.5833333
+```
+<b />
+images <b />
+<p align="center">
+  <img src="/images/qcnn_model_plot" width="350" title="hover text">
+</p>
+
+
 
