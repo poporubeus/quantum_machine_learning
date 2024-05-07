@@ -53,6 +53,6 @@ def training(seed: int, model: callable, selected_shape: int, n_epochs: int, bat
     last_params = params
     optimal_params_index = tracking_params(updated_val_acc)
     optimal_params = updated_params[optimal_params_index]
-    optimal_params = np.squeeze(np.reshape(optimal_params_index, newshape=(optimal_params.shape[1], optimal_params.shape[0])),0)
+    optimal_params = np.reshape(optimal_params, newshape=(optimal_params.shape[1], optimal_params.shape[0]))
     return [train_cost_epochs, train_acc_epochs, val_cost_epochs, val_acc_epochs, last_params, optimal_params]
 
