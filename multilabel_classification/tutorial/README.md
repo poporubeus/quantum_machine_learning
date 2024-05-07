@@ -5,8 +5,7 @@ __Date created:__ 2024/07/05;<br />
 __Description:__ Quantum convolutional neural network (QCNN) for multilabel image classification written by combining Pennylane with JAX.<br />
 In this simple tutorial we select four different classes of digits images from the *sklearn.datasets.load_digits* and we construct a quantum convolutional neural network to train and make the classification of multiclass images.<br />
 After model training, we select the last updated and optimal parameters (which correspond to the maximum value of the validation accuracy) and use them to test the model on the<br /> unseen test images. To have an idea about all the steps needed to complete the experiment we recommend to have a look at the scripts in the */src* folder.<br />
-Hope this could be useful for you, feel free to use these codes and make further improvements. With this code we would like to emphasize the ability of making<br />
-multilabel classification and stop of being constrained by binary classifications!
+Hope this could be useful for you, feel free to use these codes and make further improvements. With this code we would like to emphasize the ability of making multilabel classification and stop of being constrained by binary classifications!
 
 
 __Goal:__ Train a fully quantum convolutional neural network to classify four classes of images using train and validation sets.<br />
