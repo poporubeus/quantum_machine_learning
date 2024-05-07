@@ -85,9 +85,9 @@ first 5 epochs <b />
     Epoch: 5, ---Train loss:  1.314161 ---Train acc:  0.6166667 | ---Val loss:  1.3290185 ---Val acc:  0.5833333
 ```
 <b />
-images <b />
+QCNN model <b />
 <p align="center">
-  <img src="images/qcnn_model_plot.png" width="350" title="QCNN">
+  <img src="images/qcnn_model_plot.png" width="650" title="QCNN">
 </p>
 
 
