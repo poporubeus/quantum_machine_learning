@@ -23,15 +23,51 @@ __Installing libraries:__<br/>
 `!pip install pennyLane==0.30.0`<br/>
 
 
-__Project's structure:__<br/>
+__Project's structure:__ <br/>
 ── __tutorial__ <br/>
-│   ├── run_tutorial.ipynb<br/>
-│   ├── config.py<br/>
-│   ├── __src__ <br/>
-│   │     ├── __init__.py<br/>
-│   │     ├── plot_results.py<br/>
-│   │     ├── train.py<br/>
-│   │     ├── utils.py<br/>
-│   │     └── qcnn_architecture.py<br/>
-│   └── __dataset__ <br/>
-│         └── digits.py<br/>
+│     ├── run_tutorial.ipynb<br/>
+│     ├── config.py<br/>
+│     ├── __src__ <br/>
+│     │     ├── __init__.py<br/>
+│     │     ├── plot_results.py<br/>
+│     │     ├── train.py<br/>
+│     │     ├── utils.py<br/>
+│     │     └── qcnn_architecture.py<br/>
+│     └── __dataset__ <br/>
+│           └── digits.py<br/>
+
+
+__How to run:__
+After setting the device with `dev = qml.device("default.qubit, wires=6)` that is found inside __config.py__ file, <b />
+create the qnode by passing features and trainable weights inside the corresponding circuits <b />
+`@qml.qnode(device=dev, interface="jax") <b />
+def qcnn(data: jnp.array, params: jnp.array) -> qml.probs:<b />
+    """<b />
+    It computes the QCNN architecture and returns probabilities of detecting a class of images.<b />
+    :param data: (jnp.array) The input data to encode;<b />
+    :param params: (jnp.array) The weights within the layers;<b />
+    :return: probs: (list) The probabilities of detecting a class.<b />
+    """<b />
+    circuit = QCNNArchitecture(device=dev, wires=wires)<b />
+    qml.AmplitudeEmbedding(features=data, wires=range(len(wires)), normalize=True, pad_with=0.)<b />
+    circuit.QCNN(params)<b />
+    probs = qml.probs(wires=[3, 5])<b />
+    return probs`<b />
+  and call the function **training** iniside __train.py__ file by providing: <b />
+  seed; <b />
+  model (callable); <b />
+  selected_shape (int); <b />
+  n_epochs (int); <b />
+  batch_size (int);<b />
+  X_train;<b />
+  y_train;<b />
+  X_val;<b />
+  y_val <b />
+  like this way <b />
+  `loss_train, acc_train, loss_val, acc_val, last_params, opt_params = ( <b/>
+    training(seed=seed, model=q_model, selected_shape=params_size, n_epochs=n_epochs,<b/>
+         batch_size=batch_size, X_train=X_train, y_train=y_train,<b/>
+         X_val=X_val, y_val=y_val)<b/>
+)<b/>`
+
+
