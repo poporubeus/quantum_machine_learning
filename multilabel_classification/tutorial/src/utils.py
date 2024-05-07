@@ -8,7 +8,7 @@ import numpy as np
 
 def tracking_params(val: np.ndarray) -> int:
     """
-    Fucntion which extracts the index of the optimized parameters corresponding to the max value of the
+    Function which extracts the index of the optimized parameters corresponding to the max value of the
     model's validation accuracy.
     :param val: (np.array) Validation accuracy of the model;
     :return: (int) Index of the optimal parameter.
