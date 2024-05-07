@@ -87,7 +87,7 @@ first 5 epochs <b />
 <b />
 images <b />
 <p align="center">
-  <img src="/Users/francescoaldoventurelli/Desktop/prova_qcnn_4_demo_pennylane/qcnn_model_plot.png" width="350" title="hover text">
+  <img src="/Users/francescoaldoventurelli/Desktop/prova_qcnn_4_demo_pennylane/qcnn_model_plot.png" width="350" title="QCNN">
 </p>
 
 
