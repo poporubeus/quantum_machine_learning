@@ -1,6 +1,6 @@
 __Quantum multilabel classification with JAX__
 
-__Author:__ Francesco Aldo Venturelli;
+__Author:__ Francesco Aldo Venturelli;<br />
 __Date created:__ 2024/07/05;
 __Description:__ Quantum convolutional neural network (QCNN) for multilabel image classification written by combining Pennylane with JAX. 
 In this simple tutorial we select four different classes of digits images from the *sklearn.datasets.load_digits* and we construct a quantum convolutional neural network to train and make the classification of multiclass images.
