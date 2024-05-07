@@ -75,7 +75,7 @@ like this way <b />
 )
 ```
 
-__Results:__ <b />
+__Results:__ <b/>
 first 5 epochs <b />
 ```python
     Epoch: 1, ---Train loss:  1.3823189 ---Train acc:  0.28611112 | ---Val loss:  1.3806758 ---Val acc:  0.30555555
@@ -87,7 +87,7 @@ first 5 epochs <b />
 <b />
 images <b />
 <p align="center">
-  <img src="/images/qcnn_model_plot" width="350" title="hover text">
+  <img src="/Users/francescoaldoventurelli/Desktop/prova_qcnn_4_demo_pennylane/qcnn_model_plot.png" width="350" title="hover text">
 </p>
 
 
