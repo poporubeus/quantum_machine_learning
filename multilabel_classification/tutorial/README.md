@@ -24,14 +24,14 @@ __Installing libraries:__<br/>
 
 
 __Project's structure:__<br/>
-── tutorial<br/>
+── __tutorial__ <br/>
 │   ├── run_tutorial.ipynb<br/>
 │   ├── config.py<br/>
-│   ├── src<br/>
-│   │   ├── __init__.py<br/>
-│   │   ├── plot_results.py<br/>
-│   │   ├── train.py<br/>
-│   │   ├── utils.py<br/>
-│   │   └── qcnn_architecture.py<br/>
-│   └── dataset<br/>
-│       └── digits.py<br/>
+│   ├── __src__ <br/>
+│   │     ├── __init__.py<br/>
+│   │     ├── plot_results.py<br/>
+│   │     ├── train.py<br/>
+│   │     ├── utils.py<br/>
+│   │     └── qcnn_architecture.py<br/>
+│   └── __dataset__ <br/>
+│         └── digits.py<br/>
