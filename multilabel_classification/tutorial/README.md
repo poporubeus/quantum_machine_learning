@@ -84,7 +84,7 @@ first 5 epochs <b />
     Epoch: 5, ---Train loss:  1.2784407 ---Train acc:  0.59166664 | ---Val loss:  1.2922341 ---Val acc:  0.5104167
 ```
 <b />
-QCNN model <b />
+QCNN model:
 how the architecture looks like. 
 <p align="center">
   <img src="images/qcnn_model_plot.png" width="950" title="QCNN">
@@ -93,14 +93,6 @@ how the architecture looks like.
 Loss and accuracy plots <b />
 <p align="center">
   <img src="images/results_loss_acc.png" width="650" title="Metrics">
-</p>
-<b />
-Confusion matrix on test set
-<b />
-<p align="left">
-  <img src="images/conf_matrix_test.png" width="300" title="Confusion matrix">
-<p align="right">
-  <img src="images/conf_matrix_test_2.png" width="300" title="Confusion matrix 2">
 </p>
 
 
