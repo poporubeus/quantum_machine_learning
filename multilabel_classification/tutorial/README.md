@@ -12,7 +12,6 @@ multilabel classification and stop of being constrained by binary classification
 __Goal:__ Train a fully quantum convolutional neural network to classify four classes of images using train and validation sets.<br />
 The idea behind the project, is also the realize a multilabel classification problem, by measuring two distinct qubits,<br />
 and to exploit JAX's speed in vectorizing the training.
-
 <ciao >
 
 __Installing libraries:__<br/>
