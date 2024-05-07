@@ -41,7 +41,7 @@ __Project's structure:__ <br/>
 __How to run:__
 After setting the device with `dev = qml.device("default.qubit, wires=6)` that is found inside __config.py__ file, <b />
 create the qnode by passing features and trainable weights inside the corresponding circuits <b />
-```
+```python
     @qml.qnode(device=dev, interface="jax")
     def qcnn(data: jnp.array, params: jnp.array) -> qml.probs:
         """
@@ -56,7 +56,7 @@ create the qnode by passing features and trainable weights inside the correspond
         probs = qml.probs(wires=[3, 5])
         return probs
 ```
-and call the function **training** iniside __train.py__ file by providing: <b />
+and call the function `training` iniside __train.py__ file by providing: <b />
 seed; <b />
 model (callable); <b />
 selected_shape (int); <b />
