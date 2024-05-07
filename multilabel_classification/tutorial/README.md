@@ -24,17 +24,17 @@ __Installing libraries:__<br/>
 
 
 __Project's structure:__ <br/>
-── __tutorial__ <br/>
-│     ├── run_tutorial.ipynb<br/>
-│     ├── config.py<br/>
-│     ├── __src__ <br/>
-│     │     ├── __init__.py<br/>
-│     │     ├── plot_results.py<br/>
-│     │     ├── train.py<br/>
-│     │     ├── utils.py<br/>
-│     │     └── qcnn_architecture.py<br/>
-│     └── __dataset__ <br/>
-│           └── digits.py<br/>
+──────tutorial__ <br/>
+│         ├── run_tutorial.ipynb<br/>
+│         ├── config.py<br/>
+│         ├── __src__ <br/>
+│         │         ├── __init__.py<br/>
+│         │         ├── plot_results.py<br/>
+│         │         ├── train.py<br/>
+│         │         ├── utils.py<br/>
+│         │         └── qcnn_architecture.py<br/>
+│         └── __dataset__ <br/>
+│                   └── digits.py<br/>
 
 
 
@@ -67,7 +67,7 @@ y_train;<b />
 X_val;<b />
 y_val <b />
 like this way <b />
-```
+```python
     loss_train, acc_train, loss_val, acc_val, last_params, opt_params = (
     training(seed=seed, model=q_model, selected_shape=params_size, n_epochs=n_epochs,
          batch_size=batch_size, X_train=X_train, y_train=y_train,
