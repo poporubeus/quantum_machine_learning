@@ -13,6 +13,7 @@ __Goal:__ Train a fully quantum convolutional neural network to classify four cl
 The idea behind the project, is also the realize a multilabel classification problem, by measuring two distinct qubits,<br />
 and to exploit JAX's speed in vectorizing the training.
 
+<ciao >
 
 __Installing libraries:__<br/>
 `!pip install numpy==1.23.5`<br/>
