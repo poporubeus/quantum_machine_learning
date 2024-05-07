@@ -24,11 +24,11 @@ def SelectModel(circuit_function: callable) -> jax.jit:
     :param circuit_function: (callable) The function which generates the circuit.
     :return: quantum_model (jax.jit) The quantum circuit mapped and executed.
     """
-    qnn_teacher = jax.vmap(
+    qnn_model = jax.vmap(
         circuit_function,
         (0, None)
     )
-    quantum_model = jax.jit(qnn_teacher)
+    quantum_model = jax.jit(qnn_model)
     return quantum_model
 
 
