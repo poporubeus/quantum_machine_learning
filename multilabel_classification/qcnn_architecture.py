@@ -1,5 +1,4 @@
 import pennylane as qml
-import matplotlib.pyplot as plt
 from jax import numpy as jnp
 
 
@@ -7,7 +6,7 @@ class QCNNArchitecture:
     """
     QCNN class which creates the corresponding quantum circuit.
     """
-    def __init__(self, device: qml.device, wires: list) -> None:
+    def __init__(self, device: qml.device, wires: list[int]) -> None:
         """
         Init function which creates the class' instance.
         :param device: (qml.device) Pennylane's device;
