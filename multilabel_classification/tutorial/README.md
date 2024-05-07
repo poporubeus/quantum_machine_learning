@@ -96,7 +96,10 @@ Loss and accuracy plots
 <b />
 Confusion matrix on test set
 <p align="left">
-  <img src="images/conf_matrix_test.png" width="350" title="Confusion matrix">
+  <img src="images/conf_matrix_test.png" width="300" title="Confusion matrix">
+</p>
+<p align="right">
+  <img src="images/conf_matrix_test_2.png" width="300" title="Confusion matrix 2">
 </p>
 
 
