@@ -40,7 +40,7 @@ __Project's structure:__ <br/>
 __How to run:__
 After setting the device with `dev = qml.device("default.qubit, wires=6)` that is found inside __config.py__ file, <b />
 create the qnode by passing features and trainable weights inside the corresponding circuits <b />
-`@qml.qnode(device=dev, interface="jax") <b />
+```@qml.qnode(device=dev, interface="jax") <b />
 def qcnn(data: jnp.array, params: jnp.array) -> qml.probs:<b />
     """<b />
     It computes the QCNN architecture and returns probabilities of detecting a class of images.<b />
@@ -52,7 +52,7 @@ def qcnn(data: jnp.array, params: jnp.array) -> qml.probs:<b />
     qml.AmplitudeEmbedding(features=data, wires=range(len(wires)), normalize=True, pad_with=0.)<b />
     circuit.QCNN(params)<b />
     probs = qml.probs(wires=[3, 5])<b />
-    return probs`<b />
+    return probs```<b />
   and call the function **training** iniside __train.py__ file by providing: <b />
   seed; <b />
   model (callable); <b />
